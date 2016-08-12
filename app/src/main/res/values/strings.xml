@@ -5,4 +5,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cardNumber">Número do cartão</string>
+    <string name="cardHolder">Nome</string>
+    <string name="cardMonth">Mês validade</string>
+    <string name="cardYear">Ano validade</string>
+    <string name="cardBrand">Bandeira</string>
+    <string name="cvv">CVV</string>
+    <string name="value">Valor</string>
+    <string name="transaction">Realizar Transação</string>
 </resources>

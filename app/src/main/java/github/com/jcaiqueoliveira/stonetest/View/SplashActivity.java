@@ -1,9 +1,11 @@
-package github.com.jcaiqueoliveira.stonetest;
+package github.com.jcaiqueoliveira.stonetest.View;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import github.com.jcaiqueoliveira.stonetest.R;
 
 public class SplashActivity extends AppCompatActivity {
     private static final int SPLASH_TIME = 1500;
