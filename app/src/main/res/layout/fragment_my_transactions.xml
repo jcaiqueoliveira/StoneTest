@@ -3,17 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".View.MyTransactionsFragment">
 
-    <data>
-
-        <variable
-            name="myTransactions"
-            type="github.com.jcaiqueoliveira.stonetest.ViewModel.MyTransactions" />
-    </data>
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/transaction_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        tools:listitem="@layout/item_transaction" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/transaction_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_blank_fragment"
+            tools:listitem="@layout/item_transaction" />
+        <TextView
+            android:id="@+id/text_empty_transaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:text="@string/not_found"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+
+
 </layout>

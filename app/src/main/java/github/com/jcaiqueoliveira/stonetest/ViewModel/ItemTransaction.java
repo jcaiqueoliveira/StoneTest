@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
+import github.com.jcaiqueoliveira.stonetest.R;
 import github.com.jcaiqueoliveira.stonetest.model.TransactionsDb;
 import github.com.jcaiqueoliveira.stonetest.service.StoneService;
 import io.realm.Realm;
@@ -60,7 +61,7 @@ public class ItemTransaction extends BaseObservable {
     public void showDialog() {
         String[] items = {"Cancelar transação", "Enviar comprovante"};
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("Stone Test");
+        builder.setTitle(mContext.getString(R.string.app_name));
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int position) {
                 if (position == CANCEL_TRANSACTION) {
@@ -70,7 +71,7 @@ public class ItemTransaction extends BaseObservable {
                 }
             }
         });
-        builder.setPositiveButton("Fechar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(mContext.getString(R.string.close), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -88,14 +89,14 @@ public class ItemTransaction extends BaseObservable {
     }
 
     private void cancelTransaction() {
-        mProgress = ProgressDialog.show(mContext, "Stone Test", "Aguarde", true, false);
+        mProgress = ProgressDialog.show(mContext, mContext.getString(R.string.app_name), mContext.getString(R.string.wait), true, false);
         mProgress.show();
         Call<Void> cancelTransaction = mStoneService.deleteTransaction(mTransactionsDb.getStoneTransactionId());
         cancelTransaction.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 mProgress.dismiss();
-                Toast.makeText(mContext, "Cancelado com sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getString(R.string.canceled), Toast.LENGTH_SHORT).show();
                 deleteTransaction();
             }
 
@@ -103,7 +104,7 @@ public class ItemTransaction extends BaseObservable {
             public void onFailure(Call<Void> call, Throwable t) {
                 t.printStackTrace();
                 mProgress.dismiss();
-                Toast.makeText(mContext, "Não foi possível cancelar a transação. Tente novamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, mContext.getString(R.string.try_again), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -124,8 +125,6 @@ public class ItemTransaction extends BaseObservable {
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, mTransactionsDb.toString());
         sendIntent.setType("text/plain");
-
-// Verify that the intent will resolve to an activity
         if (sendIntent.resolveActivity(mContext.getPackageManager()) != null) {
             mContext.startActivity(sendIntent);
         }

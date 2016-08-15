@@ -16,18 +16,12 @@
     <string name="cvv">CVV</string>
     <string name="value">Valor</string>
     <string name="transaction">Realizar Transação</string>
-    <string-array name="month">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-    </string-array>
+    <string name="sucess">Sucesso</string>
+    <string name="required">Campo obrigatório</string>
+    <string name="try_again">Ocorreu um erro. Tente novamente</string>
+    <string name="wait">Aguarde</string>
+    <string name="close">Fechar</string>
+    <string name="canceled">Cancelado com sucesso</string>
+    <string name="cancel_transaction">Cancelar transação</string>
+    <string name="not_found">Você não realizou nenhuma transação</string>
 </resources>

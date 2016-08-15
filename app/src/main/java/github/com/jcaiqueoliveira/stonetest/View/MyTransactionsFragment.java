@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +42,11 @@ public class MyTransactionsFragment extends Fragment implements DataListener {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        TransactionsAdapter adapter = new TransactionsAdapter(getMyTransactions(),this);
+        TransactionsAdapter adapter = new TransactionsAdapter(getMyTransactions(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter.notifyDataSetChanged();
+        mBinding.textEmptyTransaction.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     private RealmResults<TransactionsDb> getMyTransactions() {

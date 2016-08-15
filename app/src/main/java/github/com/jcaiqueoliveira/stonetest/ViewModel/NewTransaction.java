@@ -8,10 +8,10 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import github.com.jcaiqueoliveira.stonetest.R;
 import github.com.jcaiqueoliveira.stonetest.model.Card;
 import github.com.jcaiqueoliveira.stonetest.model.TransactionsDb;
 import github.com.jcaiqueoliveira.stonetest.service.StoneService;
@@ -74,7 +74,7 @@ public class NewTransaction implements ViewModel {
         @Override
         public void afterTextChanged(Editable s) {
             if (TextUtils.isEmpty(s.toString())) {
-                errorCardHolder.set("Campo Obrigatório");
+                errorCardHolder.set(mContext.getString(R.string.required));
             } else {
                 mCard.setCardHolder(s.toString());
                 errorCardHolder.set(null);
@@ -115,7 +115,7 @@ public class NewTransaction implements ViewModel {
         @Override
         public void afterTextChanged(Editable s) {
             if (TextUtils.isEmpty(s.toString())) {
-                errorValue.set("Campo obrigatório");
+                errorValue.set(mContext.getString(R.string.required));
             } else {
                 errorValue = null;
                 mCard.setValue(s.toString());
@@ -137,13 +137,15 @@ public class NewTransaction implements ViewModel {
         mCard.setCardYear(year.get());
 
         if (checkFields()) {
-            mProgress = ProgressDialog.show(mContext, "Stone Test", "Aguarde", true, false);
+            mProgress = ProgressDialog.show(mContext, mContext.getString(R.string.app_name), mContext.getString(R.string.wait), true, false);
             Call<String> newTransaction = mStoneService.newTransaction(mCard);
             newTransaction.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.code() == 200) {
-                        saveTransactionInDb(response.body(), "SUCESSO");
+                        saveTransactionInDb(response.body(), "APROVADO");
+                    } else {
+                        saveTransactionInDb(response.body(), "REPROVADO");
                     }
                 }
 
@@ -151,7 +153,7 @@ public class NewTransaction implements ViewModel {
                 public void onFailure(Call<String> call, Throwable t) {
                     t.printStackTrace();
                     mProgress.dismiss();
-                    Toast.makeText(mContext, "Ocorreu um erro. Tente novamente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, mContext.getString(R.string.try_again), Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -159,7 +161,6 @@ public class NewTransaction implements ViewModel {
 
     private void saveTransactionInDb(final String stoneTransactionId, final String statusTransaction) {
         final RealmResults<TransactionsDb> transactionsDbs = mRealmObject.where(TransactionsDb.class).findAll();
-        Log.e("SIZE", " size: " + transactionsDbs.size());
         mRealmObject.beginTransaction();
         TransactionsDb transactionsDb = mRealmObject.createObject(TransactionsDb.class);
         transactionsDb.setCardHolder(mCard.getCardHolder());
@@ -175,7 +176,7 @@ public class NewTransaction implements ViewModel {
             @Override
             public void onChange(RealmResults<TransactionsDb> element) {
                 mProgress.dismiss();
-                Toast.makeText(mContext, "Sucesso", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, mContext.getString(R.string.sucess), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -211,7 +212,7 @@ public class NewTransaction implements ViewModel {
                     year.set(String.valueOf(ACTUAL_YEAR + position));
             }
         });
-        builder.setPositiveButton("Fechar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(mContext.getString(R.string.close), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -229,27 +230,27 @@ public class NewTransaction implements ViewModel {
     private boolean checkFields() {
         boolean fieldsIsOk = true;
         if (TextUtils.isEmpty(mCard.getCardMonth())) {
-            errorCardMonth.set("Campo obrigatório");
+            errorCardMonth.set(mContext.getString(R.string.required));
             fieldsIsOk = false;
         }
         if (TextUtils.isEmpty(mCard.getCardYear())) {
-            errorCardYear.set("Campo obrigatório");
+            errorCardYear.set(mContext.getString(R.string.required));
             fieldsIsOk = false;
         }
         if (TextUtils.isEmpty(mCard.getCardHolder())) {
-            errorCardHolder.set("Campo obrigatório");
+            errorCardHolder.set(mContext.getString(R.string.required));
             fieldsIsOk = false;
         }
         if (TextUtils.isEmpty(mCard.getCardNumber())) {
-            errorCardNumber.set("Campo obrigatório");
+            errorCardNumber.set(mContext.getString(R.string.required));
             fieldsIsOk = false;
         }
         if (TextUtils.isEmpty(mCard.getCvv())) {
-            errorCvv.set("Campo obrigatório");
+            errorCvv.set(mContext.getString(R.string.required));
             fieldsIsOk = false;
         }
         if (TextUtils.isEmpty(mCard.getValue())) {
-            errorValue.set("Campo obrigatório");
+            errorValue.set(mContext.getString(R.string.required));
             fieldsIsOk = false;
         }
         return fieldsIsOk;
