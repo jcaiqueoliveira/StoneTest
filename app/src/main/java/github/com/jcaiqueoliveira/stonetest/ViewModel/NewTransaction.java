@@ -1,5 +1,6 @@
 package github.com.jcaiqueoliveira.stonetest.ViewModel;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.ObservableField;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import github.com.jcaiqueoliveira.stonetest.model.Card;
 import github.com.jcaiqueoliveira.stonetest.model.TransactionsDb;
@@ -40,6 +42,7 @@ public class NewTransaction implements ViewModel {
     private static final int ACTUAL_YEAR = 16;
     private String[] mMonths = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     private String[] mYear = {"16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27"};
+    private ProgressDialog mProgress;
 
     public NewTransaction(Context context) {
         this.mContext = context;
@@ -141,6 +144,7 @@ public class NewTransaction implements ViewModel {
             fieldsOk = false;
         }
         if (fieldsOk) {
+            mProgress = ProgressDialog.show(mContext, "Stone Test", "Aguarde", true, false);
             Call<String> newTransaction = mStoneService.newTransaction(mCard);
             newTransaction.enqueue(new Callback<String>() {
                 @Override
@@ -153,6 +157,8 @@ public class NewTransaction implements ViewModel {
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     t.printStackTrace();
+                    mProgress.dismiss();
+                    Toast.makeText(mContext, "Ocorreu um erro. Tente novamente", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -175,7 +181,8 @@ public class NewTransaction implements ViewModel {
         transactionsDbs.addChangeListener(new RealmChangeListener<RealmResults<TransactionsDb>>() {
             @Override
             public void onChange(RealmResults<TransactionsDb> element) {
-                Log.e("SIZE2", "SIZE2: " + element.size());
+                mProgress.dismiss();
+                Toast.makeText(mContext, "Sucesso", Toast.LENGTH_LONG).show();
             }
         });
     }

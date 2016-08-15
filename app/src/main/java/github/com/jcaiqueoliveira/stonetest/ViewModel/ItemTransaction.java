@@ -19,15 +19,15 @@ public class ItemTransaction extends BaseObservable {
     }
 
     public String getCardNumber() {
-        return mTransactionsDb.getCardNumber();
+        return "Número cartão: "+mTransactionsDb.getCardNumber();
     }
 
     public String getValueTransaction() {
-        return mTransactionsDb.getValue();
+        return "Valor R$: "+mTransactionsDb.getValue();
     }
 
     public String getStatusTransaction() {
-        return mTransactionsDb.getStatusTransaction();
+        return "Status transação: "+mTransactionsDb.getStatusTransaction();
     }
 
     public void onClick(View v) {
