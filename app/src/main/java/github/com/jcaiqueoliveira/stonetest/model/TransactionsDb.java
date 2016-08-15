@@ -17,7 +17,6 @@ public class TransactionsDb extends RealmObject {
     private String statusTransaction;
 
 
-
     public String getStoneTransactionId() {
         return stoneTransactionId;
     }
@@ -88,5 +87,19 @@ public class TransactionsDb extends RealmObject {
 
     public void setStatusTransaction(String statusTransaction) {
         this.statusTransaction = statusTransaction;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionsDb{" +
+                "cardHolder='" + cardHolder + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", cardYear='" + cardYear + '\'' +
+                ", cardMonth='" + cardMonth + '\'' +
+                ", cardBrand='" + cardBrand + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", value='" + value + '\'' +
+                ", statusTransaction='" + statusTransaction + '\'' +
+                '}';
     }
 }

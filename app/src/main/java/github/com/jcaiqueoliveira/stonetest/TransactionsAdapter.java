@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.Collections;
 import java.util.List;
 
+import github.com.jcaiqueoliveira.stonetest.ViewModel.DataListener;
 import github.com.jcaiqueoliveira.stonetest.ViewModel.ItemTransaction;
 import github.com.jcaiqueoliveira.stonetest.databinding.ItemTransactionBinding;
 import github.com.jcaiqueoliveira.stonetest.model.TransactionsDb;
@@ -19,17 +19,13 @@ import github.com.jcaiqueoliveira.stonetest.model.TransactionsDb;
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder> {
 
     private List<TransactionsDb> transactionsDbs;
+    public static DataListener listener;
 
-    public TransactionsAdapter() {
-        this.transactionsDbs = Collections.emptyList();
-    }
 
-    public TransactionsAdapter(List<TransactionsDb> repositories) {
-        this.transactionsDbs = repositories;
-    }
+    public TransactionsAdapter(List<TransactionsDb> transactions, DataListener listener) {
+        this.transactionsDbs = transactions;
+        this.listener = listener;
 
-    public void setRepositories(List<TransactionsDb> repositories) {
-        this.transactionsDbs = repositories;
     }
 
     @Override
@@ -52,7 +48,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         return transactionsDbs.size();
     }
 
-    public static class TransactionViewHolder extends RecyclerView.ViewHolder {
+    public static class TransactionViewHolder extends RecyclerView.ViewHolder implements DataListener {
         final ItemTransactionBinding binding;
 
         public TransactionViewHolder(ItemTransactionBinding binding) {
@@ -62,10 +58,15 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
         void bindRepository(TransactionsDb transactionsDb) {
             if (binding.getViewModel() == null) {
-                binding.setViewModel(new ItemTransaction(itemView.getContext(), transactionsDb));
+                binding.setViewModel(new ItemTransaction(itemView.getContext(), transactionsDb, this));
             } else {
                 binding.getViewModel().setTransaction(transactionsDb);
             }
+        }
+
+        @Override
+        public void onDataChanged() {
+            listener.onDataChanged();
         }
     }
 }

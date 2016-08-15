@@ -57,6 +57,7 @@ public class NewTransaction implements ViewModel {
         brand = new ObservableField<>();
         month = new ObservableField<>();
         year = new ObservableField<>();
+        mCard = new Card();
         initializeStoneService();
     }
 
@@ -66,7 +67,6 @@ public class NewTransaction implements ViewModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mStoneService = retrofit.create(StoneService.class);
-        mCard = new Card();
     }
 
 
@@ -132,18 +132,11 @@ public class NewTransaction implements ViewModel {
     }
 
     public void newTransaction(View v) {
-        boolean fieldsOk = true;
+
         mCard.setCardMonth(month.get());
         mCard.setCardYear(year.get());
-        if (TextUtils.isEmpty(mCard.getCardMonth())) {
-            errorCardMonth.set("Campo obrigatório");
-            fieldsOk = false;
-        }
-        if (TextUtils.isEmpty(mCard.getCardYear())) {
-            errorCardYear.set("Campo obrigatório");
-            fieldsOk = false;
-        }
-        if (fieldsOk) {
+
+        if (checkFields()) {
             mProgress = ProgressDialog.show(mContext, "Stone Test", "Aguarde", true, false);
             Call<String> newTransaction = mStoneService.newTransaction(mCard);
             newTransaction.enqueue(new Callback<String>() {
@@ -231,5 +224,34 @@ public class NewTransaction implements ViewModel {
     public void onDestroy() {
         mContext = null;
         mRealmObject.close();
+    }
+
+    private boolean checkFields() {
+        boolean fieldsIsOk = true;
+        if (TextUtils.isEmpty(mCard.getCardMonth())) {
+            errorCardMonth.set("Campo obrigatório");
+            fieldsIsOk = false;
+        }
+        if (TextUtils.isEmpty(mCard.getCardYear())) {
+            errorCardYear.set("Campo obrigatório");
+            fieldsIsOk = false;
+        }
+        if (TextUtils.isEmpty(mCard.getCardHolder())) {
+            errorCardHolder.set("Campo obrigatório");
+            fieldsIsOk = false;
+        }
+        if (TextUtils.isEmpty(mCard.getCardNumber())) {
+            errorCardNumber.set("Campo obrigatório");
+            fieldsIsOk = false;
+        }
+        if (TextUtils.isEmpty(mCard.getCvv())) {
+            errorCvv.set("Campo obrigatório");
+            fieldsIsOk = false;
+        }
+        if (TextUtils.isEmpty(mCard.getValue())) {
+            errorValue.set("Campo obrigatório");
+            fieldsIsOk = false;
+        }
+        return fieldsIsOk;
     }
 }
