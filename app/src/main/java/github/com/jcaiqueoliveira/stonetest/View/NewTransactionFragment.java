@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import github.com.jcaiqueoliveira.stonetest.R;
 import github.com.jcaiqueoliveira.stonetest.ViewModel.NewTransaction;
 import github.com.jcaiqueoliveira.stonetest.databinding.FragmentNewTransactionBinding;
+import io.realm.RealmConfiguration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +20,7 @@ public class NewTransactionFragment extends Fragment {
 
     private FragmentNewTransactionBinding mBinding;
     private NewTransaction mNewTransaction;
+    private RealmConfiguration mRealmConfiguration;
 
     public NewTransactionFragment() {
         // Required empty public constructor
@@ -33,6 +35,13 @@ public class NewTransactionFragment extends Fragment {
         View v = mBinding.getRoot();
         mNewTransaction = new NewTransaction(getActivity());
         mBinding.setNewTransaction(mNewTransaction);
+
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        mNewTransaction.onDestroy();
+        super.onDestroy();
     }
 }

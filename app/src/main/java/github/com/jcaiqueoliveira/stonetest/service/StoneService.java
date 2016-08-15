@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 /**
  * Created by Kanda on 11/08/2016.
  */
-public interface Stone {
+public interface StoneService {
     @POST("transaction")
     Call<String> newTransaction(@Body Card card);
 

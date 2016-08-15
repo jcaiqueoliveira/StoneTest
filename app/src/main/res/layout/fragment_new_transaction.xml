@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="newTransaction"
             type="github.com.jcaiqueoliveira.stonetest.ViewModel.NewTransaction" />
@@ -48,7 +47,8 @@
                         android:hint="@string/cardHolder"
                         android:inputType="text"
                         android:maxLength="26"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        app:addTextChangedListener="@{newTransaction.cardHolder}"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -63,7 +63,8 @@
                         android:hint="@string/cardNumber"
                         android:inputType="number"
                         android:maxLength="19"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        app:addTextChangedListener="@{newTransaction.cardNumber}"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
@@ -74,8 +75,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:setError="@{newTransaction.errorCardMonth}"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        app:setError="@{newTransaction.errorCardMonth}">
 
                         <android.support.v7.widget.AppCompatEditText
                             android:id="@+id/cardMonth"
@@ -84,23 +85,29 @@
                             android:hint="@string/cardMonth"
                             android:inputType="number"
                             android:maxLength="2"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                            android:focusable="false"
+                            android:text="@{newTransaction.month}"
+                            android:onClick="@{newTransaction::onClickMonth}"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:setError="@{newTransaction.errorCardYear}"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        app:setError="@{newTransaction.errorCardYear}">
 
                         <android.support.v7.widget.AppCompatEditText
                             android:id="@+id/cardYear"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/cardYear"
-                            android:inputType="number"
+                            android:inputType=""
                             android:maxLength="2"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                            android:focusable="false"
+                            android:text="@{newTransaction.year}"
+                            android:onClick="@{newTransaction::onClickYear}"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -120,14 +127,17 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/cardBrand"
                             android:inputType="text"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:text="@{newTransaction.brand}" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:setError="@{newTransaction.errorCvv}"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        app:setError="@{newTransaction.errorCvv}">
 
                         <android.support.v7.widget.AppCompatEditText
                             android:id="@+id/cvv"
@@ -136,7 +146,8 @@
                             android:hint="@string/cvv"
                             android:inputType="number"
                             android:maxLength="4"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                            app:addTextChangedListener="@{newTransaction.cvv}"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -153,7 +164,7 @@
                         android:inputType="number"
                         android:maxLength="6"
                         android:maxLines="1"
-                        app:addTextChangedListener="@{newTransaction.getTextValue}" />
+                        app:addTextChangedListener="@{newTransaction.value}" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.v7.widget.AppCompatButton

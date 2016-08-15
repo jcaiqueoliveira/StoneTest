@@ -1,9 +1,11 @@
 package github.com.jcaiqueoliveira.stonetest.model;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Kanda on 11/08/2016.
  */
-public class Card {
+public class Card extends RealmObject {
     private String cardHolder;
     private String cardNumber;
     private String cardYear;
